@@ -64,14 +64,21 @@ class Notepad(tk.Tk):
         text_widget = tk.Text(frame)
         text_widget.insert(tk.END, content)
         text_widget.pack(expand=1, fill="both")
+
         self.tab_control.add(frame, text=title)
         self.tab_control.select(frame)
+
+    def close_current_tab(self, event=None):
+        current_tab = self.tab_control.select()
+        if current_tab:
+            self.tab_control.forget(current_tab)
 
     def bind_shortcuts(self):
         self.bind("<Control-o>", lambda event: self.open_file())
         self.bind("<Control-n>", lambda event: self.create_file())
         self.bind("<Control-s>", lambda event: self.save_file())
         self.bind("<Control-Shift-s>", lambda event: self.save_as_file())
+        self.bind("<Control-w>", self.close_current_tab)
 
 
 if __name__ == "__main__":
